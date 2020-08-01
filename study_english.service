@@ -1,0 +1,15 @@
+[Unit]
+Description=Docker service for study_english project
+After=network.target docker.service
+Requires=docker.service
+
+[Service]
+WorkingDirectory=/opt/study_english
+RestartSec=10
+Restart=on-failure
+ExecStop=/usr/bin/docker-compose down
+ExecStartPre=/usr/bin/docker-compose down 
+ExecStart=/usr/bin/docker-compose up --build -f docker-compose.yml -f docker-compose.prod.yml
+
+[Install]
+WantedBy=multi-user.target
