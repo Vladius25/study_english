@@ -17,8 +17,13 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from filebrowser.sites import site
 
+api_urlpatterns = [
+    path("categories/", include("categories.urls")),
+]
+
 urlpatterns = [
     re_path(r'^api-auth/', include('rest_framework.urls')),
     path('admin/filebrowser/', site.urls),
     path('admin/', admin.site.urls),
+    path("api/v1/", include(api_urlpatterns)),
 ]
