@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  djangoapp:
+    restart: always
+    build: .
+    volumes:
+      - static_volume:/app/static:z
+      - media_volume:/app/media:z
+    networks:
+      - app_tier
+    depends_on:
+      - db
+
+  nginx:
+    restart: always
+    image: nginx:stable
+    volumes:
+      - ./config/nginx:/etc/nginx/conf.d:z
+      - static_volume:/app/static:z
+      - media_volume:/app/media:z
+    depends_on:
+      - djangoapp
+    networks:
+      - app_tier
+
+  db:
+    restart: always
+    image: postgres:12
+    networks:
+      - app_tier
+    volumes:
+      - db_volume:/var/lib/postgresql/data:z
+
+networks:
+  app_tier:
+    driver: bridge
+
+volumes:
+  db_volume:
+  static_volume:
+  media_volume:
