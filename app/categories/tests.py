@@ -11,7 +11,7 @@ class TestCategories(APITestCase):
         self.client = APIClient()
         self.category = {
             "name": "1",
-            "icon": "https://icon/url"
+            "icon": "uploads/fun.png"
         }
 
     def test_return_200(self):
@@ -23,3 +23,8 @@ class TestCategories(APITestCase):
         Category.objects.create(**self.category)
         response = self.client.get("/api/v1/categories/", format="json")
         self.assertEqual(len(response.data), 2)
+
+    def test_icon_url_absolute(self):
+        Category.objects.create(**self.category)
+        response = self.client.get("/api/v1/categories/", format="json")
+        self.assertTrue(response.data[0]["icon"].startswith("http"))
