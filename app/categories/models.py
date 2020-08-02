@@ -7,8 +7,7 @@ class Category(models.Model):
     icon = FileBrowseField(
         "Иконка категории",
         max_length=200,
-        help_text="Загружайте изображения в формате 4:3 или 16:9,"
-                  " Размер изображения должен быть более 720 пикселей в высоту",
+        help_text="Загрузите изображение",
         directory="/media/uploads/",
         extensions=[".jpg", ".jpeg", ".gif", ".png", ".JPG", ".PNG", ".JPEG", ".GIF"],
         null=True
