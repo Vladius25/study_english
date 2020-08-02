@@ -8,7 +8,8 @@ services:
       - static_volume:/app/static:z
       - media_volume:/app/media:z
     networks:
-      - app_tier
+      - nginx_network
+      - db_network
     depends_on:
       - db
 
@@ -22,18 +23,20 @@ services:
     depends_on:
       - djangoapp
     networks:
-      - app_tier
+      - nginx_network
 
   db:
     restart: always
     image: postgres:12
-    networks:
-      - app_tier
     volumes:
       - db_volume:/var/lib/postgresql/data:z
+    networks:
+      - db_network
 
 networks:
-  app_tier:
+  nginx_network:
+    driver: bridge
+  db_network:
     driver: bridge
 
 volumes:

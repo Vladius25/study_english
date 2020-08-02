@@ -8,4 +8,6 @@ COPY app /app/src/
 COPY app/requirements.txt /app
 RUN pip install -r requirements.txt
 
+EXPOSE 8800
+
 CMD ["gunicorn", "--chdir", "/app/src", "--bind", ":8800", "--workers", "6", "study_english.wsgi:application"]
