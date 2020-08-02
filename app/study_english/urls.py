@@ -21,6 +21,7 @@ from filebrowser.sites import site
 api_urlpatterns = [
     path("categories/", include("categories.urls")),
     path("words/", include("words.urls")),
+    path("levels/", include("levels.urls")),
 ]
 
 urlpatterns = [
