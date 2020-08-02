@@ -4,18 +4,20 @@ from rest_framework.test import APITestCase, APIClient
 from words.models import Word
 
 
-class TestCategories(APITestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.word = {
-            "id": 1,
+class TestWords(APITestCase):
+    @classmethod
+    def setUpClass(cls):
+        super(TestWords, cls).setUpClass()
+        cls.client = APIClient()
+        cls.word = {
             "name": "to ask out",
             "translation": "Пригласить на свидание",
             "transcription": "tuː ɑːsk aʊt",
             "example": "John has asked Mary out several times.",
             "sound": "uploads/toaskout.mp3",
         }
-        Word.objects.create(**self.word)
+        Word.objects.create(**cls.word)
+        Word.objects.create(**cls.word)
 
     def test_return_200(self):
         response = self.client.get("/api/v1/words/1/")
@@ -23,6 +25,7 @@ class TestCategories(APITestCase):
 
     def test_get_word(self):
         response = self.client.get("/api/v1/words/1/", format="json")
+        self.word["id"] = 1
         del self.word["sound"]
         del response.data["sound"]
         self.assertDictEqual(response.data, self.word)
