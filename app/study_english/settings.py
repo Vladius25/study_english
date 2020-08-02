@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'categories',
     'words',
     'levels',
+    'themes',
 ]
 
 REST_FRAMEWORK = {

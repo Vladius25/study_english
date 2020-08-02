@@ -22,6 +22,7 @@ api_urlpatterns = [
     path("categories/", include("categories.urls")),
     path("words/", include("words.urls")),
     path("levels/", include("levels.urls")),
+    path("themes/", include("themes.urls")),
 ]
 
 urlpatterns = [

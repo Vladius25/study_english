@@ -13,3 +13,9 @@ class WordSerializer(serializers.ModelSerializer):
     class Meta:
         model = Word
         fields = "__all__"
+
+
+class WordSerializerShort(serializers.ModelSerializer):
+    class Meta:
+        model = Word
+        fields = ("id", "name")
