@@ -21,4 +21,4 @@ DATABASES = {
 }
 
 # API_KEY
-API_SECRET = "developing"
+API_SECRET = 'developing'
