@@ -9,7 +9,7 @@ RestartSec=10
 Restart=on-failure
 ExecStop=/usr/local/bin/docker-compose down
 ExecStartPre=/usr/local/bin/docker-compose down 
-ExecStart=/usr/local/bin/docker-compose up --build -f docker-compose.yml -f docker-compose.prod.yml
+ExecStart=/usr/local/bin/docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build
 
 [Install]
 WantedBy=multi-user.target
