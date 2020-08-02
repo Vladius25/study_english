@@ -20,4 +20,4 @@ class Word(models.Model):
         verbose_name_plural = "Слова"
 
     def __str__(self):
-        return "%s| %s" % (self.id, self.name)
+        return self.name

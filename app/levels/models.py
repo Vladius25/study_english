@@ -10,4 +10,4 @@ class Level(models.Model):
         verbose_name_plural = "Уровни"
 
     def __str__(self):
-        return "%s| %s" % (self.id, self.name)
+        return self.name
