@@ -11,7 +11,6 @@ class Category(models.Model):
                   " Размер изображения должен быть более 720 пикселей в высоту",
         directory="/media/uploads/",
         extensions=[".jpg", ".jpeg", ".gif", ".png", ".JPG", ".PNG", ".JPEG", ".GIF"],
-        blank=True,
         null=True
     )
 
