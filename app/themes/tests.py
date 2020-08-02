@@ -1,3 +1,4 @@
+from django.conf import settings
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
 
@@ -10,7 +11,6 @@ class TestThemes(APITestCase):
     @classmethod
     def setUpClass(cls):
         super(TestThemes, cls).setUpClass()
-        cls.client = APIClient()
         cls.themes, categories, levels = [], [], []
         for _ in range(3):
             categories.append(Category.objects.create(name="test", icon="uploads/icon.png"))
@@ -24,37 +24,48 @@ class TestThemes(APITestCase):
                                          name="test", photo="uploads/photo.png")
                 )
 
+    def setUp(self):
+        self.client = APIClient()
+        self.client.credentials(HTTP_SECRET=settings.API_SECRET)
+
     def test_return_200(self):
         response = self.client.get("/api/v1/themes/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_count_themes(self):
         response = self.client.get("/api/v1/themes/", format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 9)
 
     def test_filter_themes(self):
         response = self.client.get(f"/api/v1/themes/?category=1", format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 3)
 
     def test_filter_themes_two_param(self):
         response = self.client.get(f"/api/v1/themes/?category=1&level=2", format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
 
     def test_filter_theme_has_no_words(self):
         response = self.client.get(f"/api/v1/themes/", format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertFalse("words" in response.data)
 
     def test_get_theme_has_words(self):
         response = self.client.get(f"/api/v1/themes/1/", format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue("words" in response.data)
 
     def test_get_theme(self):
         response = self.client.get(f"/api/v1/themes/1/", format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         del response.data["photo"]
         self.assertDictEqual(response.data, {"id": 1, "name": "test", "category": 1, "level": 1, "words": []})
 
     def test_photo_url_absolute(self):
         response = self.client.get("/api/v1/themes/1/", format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(response.data["photo"].startswith("http"))
 
 

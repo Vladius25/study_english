@@ -1,5 +1,6 @@
 from time import sleep
 
+from django.conf import settings
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
 
@@ -10,13 +11,16 @@ class TestCategories(APITestCase):
     @classmethod
     def setUpClass(cls):
         super(TestCategories, cls).setUpClass()
-        cls.client = APIClient()
         cls.category = {
             "name": "1",
             "icon": "uploads/fun.png"
         }
         Category.objects.create(**cls.category)
         Category.objects.create(**cls.category)
+
+    def setUp(self):
+        self.client = APIClient()
+        self.client.credentials(HTTP_SECRET=settings.API_SECRET)
 
     def test_return_200(self):
         response = self.client.get("/api/v1/categories/")
